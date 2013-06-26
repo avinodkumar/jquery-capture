@@ -1,0 +1,51 @@
+/* @partial variables */
+/* @partial functions */
+/* line 6, ../sass/jquery.capture.scss */
+.capture-toolbar {
+  background: url('/img/rgbapng/000000bf.png?1372255766');
+  background: rgba(0, 0, 0, 0.75);
+  -webkit-border-radius: 0.625em;
+  -moz-border-radius: 0.625em;
+  -ms-border-radius: 0.625em;
+  -o-border-radius: 0.625em;
+  border-radius: 0.625em;
+  position: fixed;
+  bottom: 0.625em;
+  right: 0.625em;
+  padding: 0.625em;
+  color: #fff;
+}
+/* line 15, ../sass/jquery.capture.scss */
+.capture-toolbar .capture-list {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  *zoom: 1;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+/* line 49, ../../../../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_inline-block-list.scss */
+.capture-toolbar .capture-list li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  white-space: nowrap;
+  padding-left: 0.3125em;
+  padding-right: 0.3125em;
+}
+/* line 22, ../sass/jquery.capture.scss */
+.capture-toolbar .is-recording {
+  color: #ff0000;
+}
+/* line 26, ../sass/jquery.capture.scss */
+.capture-toolbar .btn {
+  cursor: pointer;
+}

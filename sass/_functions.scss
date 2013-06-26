@@ -1,0 +1,45 @@
+/* @partial functions */
+
+// Convert absolute values to a relative em values.
+@function rel($numbers, $relative-to: $base-font-size) {
+  $results: ();
+  @each $number in $numbers {
+    $results: append($results, to-relative($number, $relative-to, 'em'));
+  }
+  @return $results;
+}
+
+// Converts an absolute value to a relative one.
+@function to-relative($number, $relative-to, $output-unit) {
+
+  @each $arg in (('$number' $number) ('$relative-to' $relative-to)) {
+    @if type_of(nth($arg, 2)) != number or is-relative-number(nth($arg, 2)) {
+      @warn "#{nth($arg, 1)} = #{nth($arg, 2)} - Only absolute numeric values are accepted.";
+    }
+  }
+  @if $output-unit != "em" and $output-unit != "rem" and $output-unit != "%" {
+    @warn "$output-unit = #{$output-unit} - Only 'em', 'rem' or '%' are accepted.";
+  }
+
+  $result: strip-unit($number / $relative-to);
+  @if $output-unit == "%" {
+    $result: $result * 100;
+  }
+  @return unquote($result + if($result != 0, $output-unit, ''));
+}
+
+// Returns numeric values without a unit of measure.
+// @see https://github.com/nex3/sass/issues/533#issuecomment-11675408
+@function strip-unit($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+// True if a number uses a relative unit.
+@function is-relative-number($number) {
+  @return unit($number) == "em" or unit($number) == "rem" or unit($number) == "%";
+}
+
+// True if a number uses an absolute unit.
+@function is-absolute-number($number) {
+  @return not (is-relative-number($number) or unitless($number));
+}

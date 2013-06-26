@@ -1,0 +1,29 @@
+@import "compass";
+@import "rgbapng";
+@import "variables";
+@import "functions";
+
+.capture-toolbar {
+  @include rgba-background(rgba(0, 0 ,0 , 0.75));
+  @include border-radius(rel(10px));
+  position: fixed;
+  bottom: rel(10px);
+  right: rel(10px);
+  padding: rel(10px);
+  color: #fff;
+  
+  .capture-list {
+    @include inline-block-list(rel(5px));
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .is-recording {
+    color: #ff0000;
+  }
+  
+  .btn {
+    cursor: pointer;
+  }
+}
