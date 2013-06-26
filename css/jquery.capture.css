@@ -2,7 +2,7 @@
 /* @partial functions */
 /* line 6, ../sass/jquery.capture.scss */
 .capture-toolbar {
-  background: url('/img/rgbapng/000000bf.png?1372255766');
+  background: url('/img/rgbapng/000000bf.png?1372263817');
   background: rgba(0, 0, 0, 0.75);
   -webkit-border-radius: 0.625em;
   -moz-border-radius: 0.625em;
@@ -41,11 +41,30 @@
   padding-left: 0.3125em;
   padding-right: 0.3125em;
 }
-/* line 22, ../sass/jquery.capture.scss */
-.capture-toolbar .is-recording {
+/* line 23, ../sass/jquery.capture.scss */
+.capture-toolbar .is-recording,
+.capture-toolbar .is-playing {
   color: #ff0000;
 }
-/* line 26, ../sass/jquery.capture.scss */
+/* line 27, ../sass/jquery.capture.scss */
 .capture-toolbar .btn {
   cursor: pointer;
+}
+/* line 31, ../sass/jquery.capture.scss */
+.capture-toolbar .disabled {
+  color: #999;
+  cursor: default;
+}
+
+/* line 37, ../sass/jquery.capture.scss */
+.capture-mouse {
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  -ms-border-radius: 16px;
+  -o-border-radius: 16px;
+  border-radius: 16px;
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  background: #0092dd;
 }

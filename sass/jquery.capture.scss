@@ -19,11 +19,25 @@
     list-style-type: none;
   }
   
-  .is-recording {
+  .is-recording,
+  .is-playing {
     color: #ff0000;
   }
   
   .btn {
     cursor: pointer;
   }
+  
+  .disabled {
+    color: #999;
+    cursor: default;
+  }
+}
+
+.capture-mouse {
+  @include border-radius($mouse-size);
+  position: absolute;
+  width: rel($mouse-size);
+  height: rel($mouse-size);
+  background: $mouse-color;
 }
