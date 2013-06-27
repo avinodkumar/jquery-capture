@@ -1,8 +1,15 @@
 /* @partial variables */
 /* @partial functions */
-/* line 6, ../sass/jquery.capture.scss */
+/* line 7, ../sass/jquery.capture.scss */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 12, ../sass/jquery.capture.scss */
 .capture-toolbar {
-  background: url('/img/rgbapng/000000bf.png?1372263817');
+  background: url('/img/rgbapng/000000bf.png?1372276461');
   background: rgba(0, 0, 0, 0.75);
   -webkit-border-radius: 0.625em;
   -moz-border-radius: 0.625em;
@@ -15,7 +22,7 @@
   padding: 0.625em;
   color: #fff;
 }
-/* line 15, ../sass/jquery.capture.scss */
+/* line 21, ../sass/jquery.capture.scss */
 .capture-toolbar .capture-list {
   margin: 0;
   padding: 0;
@@ -41,23 +48,36 @@
   padding-left: 0.3125em;
   padding-right: 0.3125em;
 }
-/* line 23, ../sass/jquery.capture.scss */
+/* line 29, ../sass/jquery.capture.scss */
 .capture-toolbar .is-recording,
 .capture-toolbar .is-playing {
   color: #ff0000;
 }
-/* line 27, ../sass/jquery.capture.scss */
+/* line 33, ../sass/jquery.capture.scss */
 .capture-toolbar .btn {
   cursor: pointer;
 }
-/* line 31, ../sass/jquery.capture.scss */
+/* line 37, ../sass/jquery.capture.scss */
 .capture-toolbar .disabled {
   color: #999;
   cursor: default;
 }
 
-/* line 37, ../sass/jquery.capture.scss */
+/* line 43, ../sass/jquery.capture.scss */
 .capture-mouse {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  position: absolute;
+  width: 0.625em;
+  height: 0.625em;
+  background: #0092dd;
+}
+
+/* line 51, ../sass/jquery.capture.scss */
+.capture-click {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   -ms-border-radius: 16px;
@@ -66,5 +86,122 @@
   position: absolute;
   width: 1em;
   height: 1em;
-  background: #0092dd;
+  background: #dd0092;
+}
+
+/* line 59, ../sass/jquery.capture.scss */
+.capture-overlay {
+  background: url('/img/rgbapng/000000bf.png?1372276461');
+  background: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* line 69, ../sass/jquery.capture.scss */
+.capture-modal {
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  border-radius: 15px;
+  position: fixed;
+  z-index: 99999;
+  border: 8px solid #1e1916;
+  background: #fff;
+  font-family: Arial;
+}
+/* line 78, ../sass/jquery.capture.scss */
+.capture-modal h2,
+.capture-modal h3 {
+  font-family: Arial;
+}
+/* line 82, ../sass/jquery.capture.scss */
+.capture-modal .title {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e9e9e9));
+  background-image: -webkit-linear-gradient(#ffffff, #e9e9e9);
+  background-image: -moz-linear-gradient(#ffffff, #e9e9e9);
+  background-image: -o-linear-gradient(#ffffff, #e9e9e9);
+  background-image: linear-gradient(#ffffff, #e9e9e9);
+  -moz-border-radius-topleft: 15px;
+  -webkit-border-top-left-radius: 15px;
+  border-top-left-radius: 15px;
+  -moz-border-radius-topright: 15px;
+  -webkit-border-top-right-radius: 15px;
+  border-top-right-radius: 15px;
+  display: block;
+  margin: 0 0 1px 0;
+  padding: 15px 0;
+  color: #333;
+  text-shadow: 1px 1px 1px #fff;
+  text-align: center;
+  font-size: 14px;
+}
+/* line 94, ../sass/jquery.capture.scss */
+.capture-modal .subtitle {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+}
+/* line 99, ../sass/jquery.capture.scss */
+.capture-modal .inner {
+  padding: 5px 20px;
+  border-top: 1px solid #b9b9b9;
+  background: #fbfbfb;
+}
+/* line 105, ../sass/jquery.capture.scss */
+.capture-modal .btns {
+  border-top: 1px solid #b9b9b9;
+  background: #efefef;
+  padding: 10px 20px;
+  line-height: 27px;
+}
+/* line 112, ../sass/jquery.capture.scss */
+.capture-modal .divider {
+  display: block;
+  background: #ccc;
+  height: 1px;
+  margin: 15px 0;
+}
+/* line 119, ../sass/jquery.capture.scss */
+.capture-modal p {
+  margin: 10px 0;
+}
+/* line 124, ../sass/jquery.capture.scss */
+.capture-modal input[type='text'],
+.capture-modal textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 0.3125em;
+  margin: 0 0 0.625em 0;
+  border: 1px solid #ccc;
+  box-shadow: inset 2px 2px 2px #e6e6e6;
+  font-family: Arial;
+}
+/* line 135, ../sass/jquery.capture.scss */
+.capture-modal input[type='submit'] {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  float: right;
+  padding: 0.5em 1.25em;
+  border: 1px solid #1f5d84;
+  box-shadow: inset 0.9375em 0.9375em 0.9375em rgba(255, 255, 255, 0.1);
+  background: #006dcc;
+  color: #fff;
+  text-shadow: 0 -1px 1px black;
+  font-weight: bold;
+  font-size: 12px;
+  margin: 0;
+}
+/* line 149, ../sass/jquery.capture.scss */
+.capture-modal textarea {
+  height: 4.6875em;
 }
