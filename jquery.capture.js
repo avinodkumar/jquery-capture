@@ -41,7 +41,8 @@
       mouseClickTimeout: 1000,
       mouseClickFade: true,
       mouseClickFadeDuration: 1000,
-      saveURL: false
+      saveURL: false,
+      loadURL: false
     },
     elements = {
       toolbar: {
@@ -77,7 +78,14 @@
           '<div class="btns">' +
           '<input type="checkbox" name="capture-trash-it" id="capture-trash-it"> Reset session after save' +
           '<input type="submit" value="Save Session" id="capture-save-btn"></div>' +
-          '</form>'
+          '</form>',
+        load: '<h2 class="title">Load Saved Captured Session</h2>' +
+          '<div class="inner">' +
+          '<div class="divider"></div>' +
+          '<h3 class="subtitle">Need help?</h3>' +
+          '<p>Visit <a href="http://www.benmarshall.me/jquery-capture/" target="_blank">http://www.benmarshall.me/jquery-capture/</a> for full documentation.</p>' +
+          '</div>' +
+          '</div>'
       }
     },
     methods = {
@@ -154,7 +162,11 @@
         $('body').append(elements.toolbar.container);
       },
       load: function() {
-        
+        if (config.loadURL) {
+          methods.showModal(elements.modal.load);
+        } else {
+          alert('Error: jQuery.capture loadURL has not been set. To load sessions, you must define a loadURL.');
+        }
       },
       updateToolbar: function() {
         if (vars.isRecording) {
@@ -184,6 +196,10 @@
         
         if (!config.saveURL) {
           elements.toolbar.btns.save.hide();
+        }
+        
+        if (!config.loadURL) {
+          elements.toolbar.btns.load.hide();
         }
       },
       updateVars: function() {
@@ -436,6 +452,7 @@ jQuery(function() {
     mouseClickTimeout: 1000,
     mouseClickFade: true,
     mouseClickFadeDuration: 1000,
-    saveURL: 'TEMP-jquery-capture.php'
+    saveURL: 'TEMP-jquery-capture.php',
+    loadURL: 'TEMP-jquery-capture.php'
   });
 });
