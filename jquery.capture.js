@@ -51,6 +51,7 @@
           record: $('<li />').attr('id', 'capture-record').addClass('capture-record icon-microphone btn'),
           play: $('<li />').attr('id', 'capture-play').addClass('capture-play icon-play btn'),
           save: $('<li />').attr('id', 'capture-save').addClass('capture-save icon-save btn'),
+          load: $('<li />').attr('id', 'capture-load').addClass('capture-load icon-folder-open btn'),
           trash: $('<li />').attr('id', 'capture-trash').addClass('capture-trash icon-trash btn')
         }
       },
@@ -136,11 +137,24 @@
               });
               elements.toolbar.btnContainer.append(o);
               break;
+            case 'load':
+              o.bind('click', function(e) {
+                e.preventDefault();
+                if(!$(this).hasClass('disabled')) {
+                  methods.load(o);
+                  methods.updateVars();
+                }
+              });
+              elements.toolbar.btnContainer.append(o);
+              break;
           }
         });
         methods.updateVars();
         elements.toolbar.container.html(elements.toolbar.btnContainer);
         $('body').append(elements.toolbar.container);
+      },
+      load: function() {
+        
       },
       updateToolbar: function() {
         if (vars.isRecording) {
