@@ -72,7 +72,7 @@ jQuery.capture({
 This plugin has been tested in the following browsers:
 
 * Google Chrome
-** Version 27.0.1453.110
+ * Version 27.0.1453.110
 
 ## Development
 
