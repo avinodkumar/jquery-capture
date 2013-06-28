@@ -97,16 +97,23 @@ body {
   }
   
   .inner {
+    @include border-bottom-radius(15px);
     padding: 5px 20px;
     border-top: 1px solid #b9b9b9;
     background: #fbfbfb;
   }
   
   .btns {
+    @include border-bottom-radius(15px);
     border-top: 1px solid #b9b9b9;
     background: #efefef;
     padding: 10px 20px;
     line-height: 27px;
+    
+    label {
+      display: inline;
+      font-weight: normal;
+    }
   }
   
   .divider {
@@ -149,4 +156,23 @@ body {
   textarea {
     height: rel(75px);
   }
+}
+
+.capture-loading {
+  margin: 20px 0;
+  font-size: 82px;
+  text-align: center;
+}
+
+.capture-tooltip {
+  @include background-image(linear-gradient(lighten(#fffed7, 5%), #fffed7));
+  @include border-radius(3px);
+  @include box-shadow(1px 1px 1px darken(#fffed7, 30%));
+  position: absolute;
+  z-index: 999;
+  top: -30px;
+  right: 0;
+  padding: 5px;
+  color: darken(#fffed7, 80%);
+  font-size: 11px;
 }

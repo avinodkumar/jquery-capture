@@ -8,7 +8,10 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
+/*jslint browser: true, devel: true, indent: 2 */
+/*global window, jQuery, $, define */
 (function (factory) {
+  'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as anonymous module.
     define(['jquery'], factory);
@@ -18,7 +21,7 @@
   }
 }(function ($) {
   'use strict';
-  
+
   var vars = {
       isRecording: false,
       isPlaying: false,
@@ -49,11 +52,26 @@
         container: $('<div />').attr('id', 'capture-toolbar').addClass('capture-toolbar'),
         btnContainer: $('<ul />').attr('id', 'capture-list').addClass('capture-list'),
         btns: {
-          record: $('<li />').attr('id', 'capture-record').addClass('capture-record icon-microphone btn'),
-          play: $('<li />').attr('id', 'capture-play').addClass('capture-play icon-play btn'),
-          save: $('<li />').attr('id', 'capture-save').addClass('capture-save icon-save btn'),
-          load: $('<li />').attr('id', 'capture-load').addClass('capture-load icon-folder-open btn'),
-          trash: $('<li />').attr('id', 'capture-trash').addClass('capture-trash icon-trash btn')
+          record: $('<li />').attr({
+            'id': 'capture-record',
+            'data-description': 'Start/Stop Recording'
+          }).addClass('capture-record icon-microphone btn'),
+          play: $('<li />').attr({
+            'id': 'capture-play',
+            'data-description': 'Play/Stop Capture Session'
+          }).addClass('capture-play icon-play btn'),
+          save: $('<li />').attr({
+            'id': 'capture-save',
+            'data-description': 'Save Capture Session'
+          }).addClass('capture-save icon-save btn'),
+          load: $('<li />').attr({
+            'id': 'capture-load',
+            'data-description': 'Load Capture Session'
+          }).addClass('capture-load icon-folder-open btn'),
+          trash: $('<li />').attr({
+            'id': 'capture-trash',
+            'data-description': 'Trash Capture Session'
+          }).addClass('capture-trash icon-trash btn')
         }
       },
       modal: {
@@ -76,11 +94,14 @@
           '<p>Visit <a href="http://www.benmarshall.me/jquery-capture/" target="_blank">http://www.benmarshall.me/jquery-capture/</a> for full documentation.</p>' +
           '</div>' +
           '<div class="btns">' +
-          '<input type="checkbox" name="capture-trash-it" id="capture-trash-it"> Reset session after save' +
+          '<input type="checkbox" name="capture-trash-it" id="capture-trash-it"> <label for="capture-trash-it">Reset session after save</label>' +
           '<input type="submit" value="Save Session" id="capture-save-btn"></div>' +
           '</form>',
         load: '<h2 class="title">Load Saved Captured Session</h2>' +
           '<div class="inner">' +
+          '<div id="capture-sessions">' +
+          '<div class="capture-loading"><i class="icon-spinner icon-spin"></i></div>' +
+          '</div>' +
           '<div class="divider"></div>' +
           '<h3 class="subtitle">Need help?</h3>' +
           '<p>Visit <a href="http://www.benmarshall.me/jquery-capture/" target="_blank">http://www.benmarshall.me/jquery-capture/</a> for full documentation.</p>' +
@@ -90,7 +111,7 @@
     },
     methods = {
       init: function(options) {
-        config = $.extend( {}, config, options);
+        config = $.extend({}, config, options);
         methods.buildToolbar();
         $(window).resize(function() {
           if ($('#capture-modal').length) {
@@ -100,61 +121,69 @@
         $('body').delegate('#capture-save-btn', 'click', function(e) {
           e.preventDefault();
           methods.saveSession();
+        }).delegate('#capture-overlay', 'click', function() {
+          methods.closeModal();
+        });
+        $('#capture-toolbar').delegate('.btn', 'mouseover', function() {
+          var desc = $(this).data('description');
+          $(this).append('<div class="capture-tooltip">' + desc + '</div>');
+        }).delegate('.btn', 'mouseout', function() {
+          $('.capture-tooltip', this).remove();
         });
       },
       buildToolbar: function() {
         $.each(elements.toolbar.btns, function(i, o) {
-          switch(i) {
-            case 'record':
-              o.bind('click', function(e) {
-                e.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                  methods.record(o);
-                  methods.updateVars();
-                }
-              });
-              elements.toolbar.btnContainer.append(o);
-              break;
-            case 'play':
-              o.bind('click', function(e) {
-                e.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                  methods.play(o);
-                  methods.updateVars();
-                }
-              });
-              elements.toolbar.btnContainer.append(o);
-              break;
-            case 'trash':
-              o.bind('click', function(e) {
-                e.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                  methods.trash();
-                  methods.updateVars();
-                }
-              });
-              elements.toolbar.btnContainer.append(o);
-              break;
-            case 'save':
-              o.bind('click', function(e) {
-                e.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                  methods.save(o);
-                  methods.updateVars();
-                }
-              });
-              elements.toolbar.btnContainer.append(o);
-              break;
-            case 'load':
-              o.bind('click', function(e) {
-                e.preventDefault();
-                if(!$(this).hasClass('disabled')) {
-                  methods.load(o);
-                  methods.updateVars();
-                }
-              });
-              elements.toolbar.btnContainer.append(o);
-              break;
+          switch (i) {
+          case 'record':
+            o.bind('click', function(e) {
+              e.preventDefault();
+              if (!$(this).hasClass('disabled')) {
+                methods.record(o);
+                methods.updateVars();
+              }
+            });
+            elements.toolbar.btnContainer.append(o);
+            break;
+          case 'play':
+            o.bind('click', function(e) {
+              e.preventDefault();
+              if (!$(this).hasClass('disabled')) {
+                methods.play(o);
+                methods.updateVars();
+              }
+            });
+            elements.toolbar.btnContainer.append(o);
+            break;
+          case 'trash':
+            o.bind('click', function(e) {
+              e.preventDefault();
+              if (!$(this).hasClass('disabled')) {
+                methods.trash();
+                methods.updateVars();
+              }
+            });
+            elements.toolbar.btnContainer.append(o);
+            break;
+          case 'save':
+            o.bind('click', function(e) {
+              e.preventDefault();
+              if (!$(this).hasClass('disabled')) {
+                methods.save(o);
+                methods.updateVars();
+              }
+            });
+            elements.toolbar.btnContainer.append(o);
+            break;
+          case 'load':
+            o.bind('click', function(e) {
+              e.preventDefault();
+              if (!$(this).hasClass('disabled')) {
+                methods.load(o);
+                methods.updateVars();
+              }
+            });
+            elements.toolbar.btnContainer.append(o);
+            break;
           }
         });
         methods.updateVars();
@@ -176,7 +205,7 @@
           methods.btnStatus('record', 'not-recording');
           elements.toolbar.btns.play.removeClass('disabled');
         }
-        
+
         if (vars.isPlaying) {
           methods.btnStatus('play', 'is-playing');
           elements.toolbar.btns.record.addClass('disabled');
@@ -184,7 +213,7 @@
           methods.btnStatus('play', 'not-playing');
           elements.toolbar.btns.record.removeClass('disabled');
         }
-        
+
         if (!vars.events.length) {
           elements.toolbar.btns.play.addClass('disabled');
           elements.toolbar.btns.trash.addClass('disabled');
@@ -193,11 +222,11 @@
           elements.toolbar.btns.trash.removeClass('disabled');
           elements.toolbar.btns.save.removeClass('disabled');
         }
-        
+
         if (!config.saveURL) {
           elements.toolbar.btns.save.hide();
         }
-        
+
         if (!config.loadURL) {
           elements.toolbar.btns.load.hide();
         }
@@ -213,19 +242,19 @@
         } else if (elements.toolbar.btns.play.hasClass('not-playing')) {
           vars.isPlaying = false;
         }
-        
+
         methods.updateToolbar();
       },
       trash: function() {
         vars.events = [];
         methods.updateVars();
       },
-      save: function(btn) {
+      save: function() {
         if (config.saveURL) {
           methods.showModal(elements.modal.save);
           $('#capture-url', elements.modal.modal).html(document.URL);
           $('#capture-start-time', elements.modal.modal).html(vars.startTime.toUTCString());
-          $('#capture-num-events', elements.modal.modal).html(vars.events.length);
+          $('#capture-num-events', elements.modal.modal).html(methods.comma(vars.events.length));
           $('#capture-save-frm', elements.modal.modal).attr('href', config.saveURL);
           $('input[name="URL"]', elements.modal.modal).attr('value', document.URL);
           $('input[name="events"]', elements.modal.modal).attr('value', JSON.stringify(vars.events));
@@ -254,6 +283,12 @@
             elements.modal.modal.fadeIn();
           }
           methods.positionModal();
+
+          $('body').bind('keyup', function(e) {
+            if (e.keyCode === 27) {
+              methods.closeModal();
+            }
+          });
         }
       },
       closeModal: function() {
@@ -263,6 +298,7 @@
         $('#capture-modal').fadeOut(function() {
           $(this).remove();
         });
+        $('body').unbind('keyup');
       },
       positionModal: function() {
         var width = $(window).width(),
@@ -280,7 +316,7 @@
           methods.events('unbind');
           methods.btnStatus('record', 'not-recording');
           methods.updateVars();
-        } else if(btn.hasClass('is-recording')) {
+        } else if (btn.hasClass('is-recording')) {
           methods.events('bind');
           methods.btnStatus('record', 'is-recording');
           methods.updateVars();
@@ -299,49 +335,51 @@
           methods.stop();
           methods.btnStatus('play', 'not-playing');
           methods.updateVars();
-        } else if(btn.hasClass('is-playing')) {
+        } else if (btn.hasClass('is-playing')) {
           $(window).scrollTop(vars.startingPosition);
           methods.btnStatus('play', 'is-playing');
           methods.updateVars();
-          $.each(vars.events, function(i, o) {
-            methods.playEvent(o);
+          $.each(vars.events, function() {
+            methods.playEvent(this);
           });
         }
         var interval = setInterval(function() {
-          if(vars.eventCounter === 0) {
+          if (vars.eventCounter === 0) {
             methods.stop();
             window.clearInterval(interval);
           }
         });
       },
       btnStatus: function(btn, status) {
-        switch(btn) {
-          case 'play':
-            switch(status) {
-              case 'not-playing':
-                elements.toolbar.btns.play.removeClass('is-playing icon-stop').addClass('not-playing icon-play');
-                break;
-              case 'is-playing':
-                elements.toolbar.btns.play.addClass('is-playing icon-stop').removeClass('not-playing icon-play');
-                break;
-            }
+        switch (btn) {
+        case 'play':
+          switch (status) {
+          case 'not-playing':
+            elements.toolbar.btns.play.removeClass('is-playing icon-stop').addClass('not-playing icon-play');
             break;
-          case 'record':
-            switch(status) {
-              case 'not-recording':
-                elements.toolbar.btns.record.removeClass('is-recording').addClass('not-recording');
-                break;
-              case 'is-recording':
-                elements.toolbar.btns.record.addClass('is-recording').removeClass('not-recording');
-                break;
-            }
+          case 'is-playing':
+            elements.toolbar.btns.play.addClass('is-playing icon-stop').removeClass('not-playing icon-play');
             break;
+          }
+          break;
+        case 'record':
+          switch (status) {
+          case 'not-recording':
+            elements.toolbar.btns.record.removeClass('is-recording').addClass('not-recording');
+            break;
+          case 'is-recording':
+            elements.toolbar.btns.record.addClass('is-recording').removeClass('not-recording');
+            break;
+          }
+          break;
         }
       },
-      stop: function() {
+      stop: function(c) {
+        var i,
+          length = vars.timeouts.length;
         methods.btnStatus('play', 'not-playing');
         methods.updateVars();
-        for (var i = 0; i < vars.timeouts.length; i++) {
+        for (i = 0; i < length; i++) {
           window.clearTimeout(vars.timeouts[i]);
         }
         vars.timeouts = [];
@@ -353,59 +391,57 @@
       playEvent: function(e) {
         var id,
           diff = e.timeStamp - vars.startTime.getTime();
-        switch(e.type) {
-          case 'mousemove':
-            id = 'capture-mouse-' + diff;
+        switch (e.type) {
+        case 'mousemove':
+          id = 'capture-mouse-' + diff;
+          vars.timeouts.push(setTimeout(function() {
+            $('body').append($('<div />').addClass('capture-mouse').attr('id', id).css({
+              top: e.pageY,
+              left: e.pageX
+            }));
             vars.timeouts.push(setTimeout(function() {
-              $('body').append($('<div />').addClass('capture-mouse').attr('id', id).css({
-                top: e.pageY,
-                left: e.pageX
-              }));
-              vars.timeouts.push(setTimeout(function() {
-                vars.eventCounter--;
-                if (config.mouseFade) {
-                  $('#' + id).fadeOut(config.mouseFadeDuration, function() {
-                    $(this).remove();
-                  });
-                } else {
-                  $('#' + id).remove();
-                }
-              }, config.mouseTimeout));
-              
-            }, diff));
-            break;
-          case 'click':
-            id = 'capture-click-' + diff;
+              vars.eventCounter = vars.eventCounter - 1;
+              if (config.mouseFade) {
+                $('#' + id).fadeOut(config.mouseFadeDuration, function() {
+                  $(this).remove();
+                });
+              } else {
+                $('#' + id).remove();
+              }
+            }, config.mouseTimeout));
+          }, diff));
+          break;
+        case 'click':
+          id = 'capture-click-' + diff;
+          vars.timeouts.push(setTimeout(function() {
+            $('body').append($('<div />').addClass('capture-click').attr('id', id).css({
+              top: e.pageY,
+              left: e.pageX
+            }));
             vars.timeouts.push(setTimeout(function() {
-              $('body').append($('<div />').addClass('capture-click').attr('id', id).css({
-                top: e.pageY,
-                left: e.pageX
-              }));
-              vars.timeouts.push(setTimeout(function() {
-                vars.eventCounter--;
-                if (config.mouseClickFade) {
-                  $('#' + id).fadeOut(config.mouseClickFadeDuration, function() {
-                    $(this).remove();
-                  });
-                } else {
-                  $('#' + id).remove();
-                }
-              }, config.mouseClickTimeout));
-              
-            }, diff));
-            break;
-          case 'scroll':
-            vars.timeouts.push(setTimeout(function() {
-              $(window).scrollTop(e.windowPos);
-              vars.eventCounter--;
-            }, diff));
-            break;
+              vars.eventCounter = vars.eventCounter - 1;
+              if (config.mouseClickFade) {
+                $('#' + id).fadeOut(config.mouseClickFadeDuration, function() {
+                  $(this).remove();
+                });
+              } else {
+                $('#' + id).remove();
+              }
+            }, config.mouseClickTimeout));
+          }, diff));
+          break;
+        case 'scroll':
+          vars.timeouts.push(setTimeout(function() {
+            $(window).scrollTop(e.windowPos);
+            vars.eventCounter = vars.eventCounter - 1;
+          }, diff));
+          break;
         }
       },
       events: function(a) {
         if (a === 'bind') {
           $.each(config.track, function(e, v) {
-            if(v) {
+            if (v) {
               $(window).bind(e, function(d) {
                 var event = {};
                 if ($(window).scrollTop() >= 0) {
@@ -413,30 +449,32 @@
                 } else {
                   event.windowPos = 0;
                 }
-                
+
                 event.type = d.type;
                 event.pageY = d.pageY;
                 event.pageX = d.pageX;
                 event.timeStamp = d.timeStamp;
-                
+
                 vars.events.push(event);
               });
             }
           });
         } else if (a === 'unbind') {
           $.each(config.track, function(e, v) {
-            if(v) {
+            if (v) {
               $(window).unbind(e);
             }
           });
         }
+      },
+      comma: function(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
-    }
-    
-  
+    };
+
   $.capture = function(options) {
     methods.init(options);
-  }
+  };
 }));
 
 jQuery(function() {

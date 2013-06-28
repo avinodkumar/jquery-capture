@@ -9,7 +9,7 @@ body {
 
 /* line 12, ../sass/jquery.capture.scss */
 .capture-toolbar {
-  background: url('/img/rgbapng/000000bf.png?1372276461');
+  background: url('/img/rgbapng/000000bf.png?1372446570');
   background: rgba(0, 0, 0, 0.75);
   -webkit-border-radius: 0.625em;
   -moz-border-radius: 0.625em;
@@ -91,7 +91,7 @@ body {
 
 /* line 59, ../sass/jquery.capture.scss */
 .capture-overlay {
-  background: url('/img/rgbapng/000000bf.png?1372276461');
+  background: url('/img/rgbapng/000000bf.png?1372446570');
   background: rgba(0, 0, 0, 0.75);
   position: fixed;
   z-index: 9999;
@@ -147,29 +147,46 @@ body {
 }
 /* line 99, ../sass/jquery.capture.scss */
 .capture-modal .inner {
+  -moz-border-radius-bottomleft: 15px;
+  -webkit-border-bottom-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  -moz-border-radius-bottomright: 15px;
+  -webkit-border-bottom-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   padding: 5px 20px;
   border-top: 1px solid #b9b9b9;
   background: #fbfbfb;
 }
-/* line 105, ../sass/jquery.capture.scss */
+/* line 106, ../sass/jquery.capture.scss */
 .capture-modal .btns {
+  -moz-border-radius-bottomleft: 15px;
+  -webkit-border-bottom-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  -moz-border-radius-bottomright: 15px;
+  -webkit-border-bottom-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   border-top: 1px solid #b9b9b9;
   background: #efefef;
   padding: 10px 20px;
   line-height: 27px;
 }
-/* line 112, ../sass/jquery.capture.scss */
+/* line 113, ../sass/jquery.capture.scss */
+.capture-modal .btns label {
+  display: inline;
+  font-weight: normal;
+}
+/* line 119, ../sass/jquery.capture.scss */
 .capture-modal .divider {
   display: block;
   background: #ccc;
   height: 1px;
   margin: 15px 0;
 }
-/* line 119, ../sass/jquery.capture.scss */
+/* line 126, ../sass/jquery.capture.scss */
 .capture-modal p {
   margin: 10px 0;
 }
-/* line 124, ../sass/jquery.capture.scss */
+/* line 131, ../sass/jquery.capture.scss */
 .capture-modal input[type='text'],
 .capture-modal textarea {
   -webkit-box-sizing: border-box;
@@ -183,7 +200,7 @@ body {
   box-shadow: inset 2px 2px 2px #e6e6e6;
   font-family: Arial;
 }
-/* line 135, ../sass/jquery.capture.scss */
+/* line 142, ../sass/jquery.capture.scss */
 .capture-modal input[type='submit'] {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -201,7 +218,38 @@ body {
   font-size: 12px;
   margin: 0;
 }
-/* line 149, ../sass/jquery.capture.scss */
+/* line 156, ../sass/jquery.capture.scss */
 .capture-modal textarea {
   height: 4.6875em;
+}
+
+/* line 161, ../sass/jquery.capture.scss */
+.capture-loading {
+  margin: 20px 0;
+  font-size: 82px;
+  text-align: center;
+}
+
+/* line 167, ../sass/jquery.capture.scss */
+.capture-tooltip {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fffff1), color-stop(100%, #fffed7));
+  background-image: -webkit-linear-gradient(#fffff1, #fffed7);
+  background-image: -moz-linear-gradient(#fffff1, #fffed7);
+  background-image: -o-linear-gradient(#fffff1, #fffed7);
+  background-image: linear-gradient(#fffff1, #fffed7);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 1px 1px 1px #fffa3e;
+  -moz-box-shadow: 1px 1px 1px #fffa3e;
+  box-shadow: 1px 1px 1px #fffa3e;
+  position: absolute;
+  z-index: 999;
+  top: -30px;
+  right: 0;
+  padding: 5px;
+  color: #3e3c00;
+  font-size: 11px;
 }
